@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
-*
 * @author Raul
  */
 public class Register extends javax.swing.JFrame {

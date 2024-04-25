@@ -9,7 +9,6 @@ import static BBDD.FuncionesGerente.conseguirID;
 import static BBDD.FuncionesUsuario.BuscarUsuario;
 
 /**
- *
  * @author Pablo
  */
 public class FuncionesComprobacion {

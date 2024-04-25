@@ -12,7 +12,6 @@ import static BBDD.FuncionesUsuario.BuscarUsuario;
 import static BBDD.FuncionesUsuario.ConseguirNombre;
 
 /**
- *
  * @author Pablo
  */
 public class FuncionesReserva {

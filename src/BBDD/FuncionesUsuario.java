@@ -8,7 +8,6 @@ import java.sql.Statement;
 import static BBDD.FuncionesComprobacion.*;
 
 /**
- *
  * @author Pablo
  */
 public class FuncionesUsuario {

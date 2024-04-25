@@ -9,7 +9,6 @@ import static BBDD.FuncionesComprobacion.comprobacionFormatoCorreo;
 import static BBDD.FuncionesComprobacion.comprobacionFormatoTelef;
 import static BBDD.FuncionesUsuario.*;
 /**
- *
  * @author Pablo
  */
 public class FuncionesGerente {

@@ -6,7 +6,6 @@ import static BBDD.FuncionesUsuario.*;
 import static Connection.ConexionPrincipal.*;
 import static BBDD.FuncionesComprobacion.*;
 /**
- *
  * @author Raul
  */
 public class LogIn extends javax.swing.JFrame {
