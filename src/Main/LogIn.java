@@ -1,8 +1,11 @@
 package Main;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
+import java.sql.Connection;
+
+import static BBDD.FuncionesUsuario.*;
+import static Connection.ConexionPrincipal.*;
+import static BBDD.FuncionesComprobacion.*;
 /**
- *
  * @author Raul
  */
 public class LogIn extends javax.swing.JFrame {
@@ -64,6 +67,10 @@ public class LogIn extends javax.swing.JFrame {
             }
         });
 
+        loginButton.addActionListener( new java.awt.event.ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent evt){loginButtonActionPerformed(evt);}
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,7 +119,37 @@ public class LogIn extends javax.swing.JFrame {
     }
 
     private void correoActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+
+    }
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt){
+        String correoS = correo.getText();
+        char[] contraAux = passwordUsuario.getPassword();
+        String contraS = new String(contraAux);
+        java.util.Arrays.fill(contraAux, ' ');
+        if(!correoS.isEmpty()) {
+            if(!contraS.isEmpty()) {
+                Connection BD = conectarBD();
+                if (comprobacionFormatoCorreo(correoS)) {
+                    if (BuscarUsuario(BD, correoS, contraS)) {
+                        desconexion(BD);
+                        JOptionPane.showMessageDialog(null, "Los datos introducidos son correctos", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        desconexion(BD);
+                        JOptionPane.showMessageDialog(null, "El correo o contraseña no son correctos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    }
+                } else {
+                    desconexion(BD);
+                    JOptionPane.showMessageDialog(null, "El correo no tiene un formato valido", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Rellena el campo de la contraseña para continuar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Rellena el campo del correo para continuar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {

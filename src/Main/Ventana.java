@@ -1,9 +1,5 @@
 package Main;
 
-/**
- *
- * @author Raul
- */
 public class Ventana extends javax.swing.JFrame {
 
     /**
