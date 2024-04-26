@@ -1,6 +1,12 @@
 package Main;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
+import java.sql.Connection;
+
+import static Connection.ConexionPrincipal.conectarBD;
+import static BBDD.FuncionesComprobacion.*;
+import static BBDD.FuncionesUsuario.*;
+import static Connection.ConexionPrincipal.desconexion;
+
 /**
  *
  * @author Raul
@@ -34,7 +40,7 @@ public class Register extends javax.swing.JFrame {
         correo = new javax.swing.JTextField();
         telefonoText = new javax.swing.JLabel();
         telefono = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        registrarButton = new javax.swing.JButton();
         volverButton = new javax.swing.JButton();
         passwordText = new javax.swing.JLabel();
         password = new javax.swing.JPasswordField();
@@ -57,21 +63,17 @@ public class Register extends javax.swing.JFrame {
 
         correoText.setText("Correo:");
 
-        nombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nombreActionPerformed(evt);
-            }
-        });
 
-        correo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                correoActionPerformed(evt);
+
+        registrarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt){
+                registrarButtonActionPerformed(evt);
             }
         });
 
         telefonoText.setText("Telefono:");
 
-        jButton1.setText("Registrar");
+        registrarButton.setText("Registrar");
 
         volverButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         volverButton.setText("<");
@@ -93,7 +95,7 @@ public class Register extends javax.swing.JFrame {
                                 .addComponent(salirButton))
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(216, 216, 216)
-                                .addComponent(jButton1)
+                                .addComponent(registrarButton)
                                 .addGap(98, 98, 98))
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(66, 66, 66)
@@ -143,7 +145,7 @@ public class Register extends javax.swing.JFrame {
                                         .addComponent(passwordText)
                                         .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(71, 71, 71)
-                                .addComponent(jButton1)
+                                .addComponent(registrarButton)
                                 .addGap(0, 104, Short.MAX_VALUE))
         );
 
@@ -154,8 +156,40 @@ public class Register extends javax.swing.JFrame {
         System.exit(0);
     }
 
-    private void nombreActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    private void registrarButtonActionPerformed(java.awt.event.ActionEvent evt){
+        String correoS = correo.getText();
+        char[] contraAux = password.getPassword();
+        String contraS = new String(contraAux);
+        java.util.Arrays.fill(contraAux, ' ');
+        String nombreS = nombre.getText();
+        String apellidoS = apellido.getText();
+        String telefonoS = telefono.getText();
+        if(!correoS.isEmpty() && !contraS.isEmpty() && !nombreS.isEmpty() && !apellidoS.isEmpty() && !telefonoS.isEmpty()){
+            Connection BD = conectarBD();
+            if(comprobacionFormatoCorreo(correoS)){
+                if(comprobacionDisponibilidadCorreo(BD,correoS)){
+                    if(comprobacionFormatoTelef(telefonoS)){
+                        if(comprobacionDisponibilidadTelefono(BD,telefonoS)){
+                            RegistrarUsuario(BD,nombreS,apellidoS,correoS,telefonoS,contraS);
+                            desconexion(BD);
+                            JOptionPane.showMessageDialog(null, "El registro es exitoso, ya puede logearse :)", "Información", JOptionPane.INFORMATION_MESSAGE);
+                        }else{
+                            desconexion(BD);
+                            JOptionPane.showMessageDialog(null, "El telefono no esta disponible para registrarlo", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "El telefono no tiene un formato valido", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    }
+                }else{
+                    desconexion(BD);
+                    JOptionPane.showMessageDialog(null, "El correo no esta disponible para registrarlo", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "El correo no tiene un formato valido", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos para continuar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -163,16 +197,13 @@ public class Register extends javax.swing.JFrame {
         ventanaPrincipal.setVisible(true);
     }
 
-    private void correoActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
 
     // Variables declaration - do not modify
     private javax.swing.JTextField apellido;
     private javax.swing.JLabel apellidoText;
     private javax.swing.JTextField correo;
     private javax.swing.JLabel correoText;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton registrarButton;
     private javax.swing.JTextField nombre;
     private javax.swing.JLabel nombreText;
     private javax.swing.JPasswordField password;
