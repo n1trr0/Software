@@ -35,6 +35,7 @@ public class LogIn extends javax.swing.JFrame {
         passwordText = new javax.swing.JLabel();
         loginButton = new javax.swing.JToggleButton();
         volverButton = new javax.swing.JToggleButton();
+        errorText = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -71,6 +72,9 @@ public class LogIn extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt){loginButtonActionPerformed(evt);}
         });
 
+        errorText.setForeground(new java.awt.Color(255, 0, 0));
+        errorText.setText("xd");
+        errorText.setVisible(false);
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,11 +89,11 @@ public class LogIn extends javax.swing.JFrame {
                                         .addComponent(passwordText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(correoText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(27, 27, 27)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(passwordUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
-                                                .addComponent(correo)))
+                                        .addComponent(passwordUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                                        .addComponent(correo)
+                                        .addComponent(errorText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(107, 107, 107))
         );
         layout.setVerticalGroup(
@@ -98,7 +102,9 @@ public class LogIn extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(salirButton)
                                         .addComponent(volverButton))
-                                .addGap(134, 134, 134)
+                                .addGap(112, 112, 112)
+                                .addComponent(errorText)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(correoText))
@@ -136,19 +142,23 @@ public class LogIn extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Los datos introducidos son correctos", "Información", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         desconexion(BD);
-                        JOptionPane.showMessageDialog(null, "El correo o contraseña no son correctos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                        errorText.setText("El correo o contraseña no son correctos");
+                        errorText.setVisible(true);
                     }
                 } else {
                     desconexion(BD);
-                    JOptionPane.showMessageDialog(null, "El correo no tiene un formato valido", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    errorText.setText("El correo no tiene un formato valido");
+                    errorText.setVisible(true);
                 }
             }
             else{
-                JOptionPane.showMessageDialog(null, "Rellena el campo de la contraseña para continuar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                errorText.setText("Rellena el campo de la contraseña para continuar");
+                errorText.setVisible(true);
             }
         }
         else{
-            JOptionPane.showMessageDialog(null, "Rellena el campo del correo para continuar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            errorText.setText("Rellena el campo del correo para continuar");
+            errorText.setVisible(true);
         }
     }
 
@@ -157,9 +167,11 @@ public class LogIn extends javax.swing.JFrame {
         ventanaPrincipal.setVisible(true);
     }
 
+
     // Variables declaration - do not modify
     private javax.swing.JTextField correo;
     private javax.swing.JLabel correoText;
+    private javax.swing.JLabel errorText;
     private javax.swing.JToggleButton loginButton;
     private javax.swing.JLabel passwordText;
     private javax.swing.JPasswordField passwordUsuario;
