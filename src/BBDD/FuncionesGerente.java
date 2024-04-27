@@ -67,6 +67,24 @@ public class FuncionesGerente {
         }
     }
 
+    public static int conseguirNivel(Connection BD,String correo, String contra){
+        int nivel=0;
+        try{
+            Statement statement = BD.createStatement();
+            String sqlQuery = "SELECT * FROM usuarios";
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            while (resultSet.next()){
+                if(resultSet.getString("Correo").equals(correo) && resultSet.getString("Contraseña").equals(contra)){
+                    nivel = resultSet.getInt("Nivel");
+                    break;
+                }
+            }
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return nivel;
+    }
+
     public static int conseguirID(Connection BD,String correo, String telef, String contra){
         int id=0;
         try{
