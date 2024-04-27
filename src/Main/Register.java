@@ -44,6 +44,7 @@ public class Register extends javax.swing.JFrame {
         volverButton = new javax.swing.JButton();
         passwordText = new javax.swing.JLabel();
         password = new javax.swing.JPasswordField();
+        errorText = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -85,6 +86,10 @@ public class Register extends javax.swing.JFrame {
 
         passwordText.setText("Contraseña:");
 
+        errorText.setForeground(new java.awt.Color(255, 0, 0));
+        errorText.setText("xd");
+        errorText.setVisible(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -100,23 +105,28 @@ public class Register extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(66, 66, 66)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(nombreText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(apellidoText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(passwordText, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(telefonoText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(correoText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(21, 21, 21)
-                                                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(errorText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGap(86, 86, 86))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(18, 18, 18)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(correo, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                                                        .addComponent(apellido, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                                                        .addComponent(telefono, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                                                        .addComponent(password))))
-                                .addGap(83, 83, 83))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(nombreText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(apellidoText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(passwordText, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(telefonoText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(correoText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(21, 21, 21)
+                                                                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(18, 18, 18)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                        .addComponent(correo, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                                                                        .addComponent(apellido, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                                                                        .addComponent(telefono, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                                                                        .addComponent(password))))
+                                                .addGap(83, 83, 83))))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,7 +154,9 @@ public class Register extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(passwordText)
                                         .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(71, 71, 71)
+                                .addGap(29, 29, 29)
+                                .addComponent(errorText)
+                                .addGap(26, 26, 26)
                                 .addComponent(registrarButton)
                                 .addGap(0, 104, Short.MAX_VALUE))
         );
@@ -175,20 +187,25 @@ public class Register extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "El registro es exitoso, ya puede logearse :)", "Información", JOptionPane.INFORMATION_MESSAGE);
                         }else{
                             desconexion(BD);
-                            JOptionPane.showMessageDialog(null, "El telefono no esta disponible para registrarlo", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                            errorText.setText("El telefono no esta disponible para registrarlo");
+                            errorText.setVisible(true);
                         }
                     }else{
-                        JOptionPane.showMessageDialog(null, "El telefono no tiene un formato valido", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                        errorText.setText("El telefono no tiene un formato valido");
+                        errorText.setVisible(true);
                     }
                 }else{
                     desconexion(BD);
-                    JOptionPane.showMessageDialog(null, "El correo no esta disponible para registrarlo", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    errorText.setText("El correo no esta disponible para registrarlo");
+                    errorText.setVisible(true);
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "El correo no tiene un formato valido", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                errorText.setText("El correo no tiene un formato valido");
+                errorText.setVisible(true);
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos para continuar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            errorText.setText("Por favor, rellene todos los campos para continuar");
+            errorText.setVisible(true);
         }
     }
 
@@ -203,6 +220,7 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel apellidoText;
     private javax.swing.JTextField correo;
     private javax.swing.JLabel correoText;
+    private javax.swing.JLabel errorText;
     private javax.swing.JButton registrarButton;
     private javax.swing.JTextField nombre;
     private javax.swing.JLabel nombreText;
