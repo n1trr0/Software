@@ -1,13 +1,16 @@
 package Main;
 
-public class Ventana extends javax.swing.JFrame {
+import Data.Variables;
 
+
+public class Ventana extends javax.swing.JFrame {
     /**
      * Creates new form Ventana
      */
     public Ventana() {
         initComponents();
         this.setLocationRelativeTo(null);
+
     }
 
     /**
@@ -23,6 +26,7 @@ public class Ventana extends javax.swing.JFrame {
         reservarButton = new javax.swing.JButton();
         loginButton = new javax.swing.JButton();
         registrarButton = new javax.swing.JButton();
+        perfilButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -56,6 +60,14 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
+        perfilButton.setText("Perfil");
+        perfilButton.setVisible(false);
+        perfilButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                perfilButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -66,6 +78,7 @@ public class Ventana extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap(225, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(perfilButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(registrarButton)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                 .addComponent(reservarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -76,7 +89,9 @@ public class Ventana extends javax.swing.JFrame {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(salirButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                                .addComponent(perfilButton)
+                                .addGap(33, 33, 33)
                                 .addComponent(registrarButton)
                                 .addGap(38, 38, 38)
                                 .addComponent(loginButton)
@@ -106,6 +121,16 @@ public class Ventana extends javax.swing.JFrame {
         Register registerVentana = new Register(this);
         registerVentana.setVisible(true);
         this.setVisible(false);
+    }
+
+    private void perfilButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    public void update1(){
+        if(Variables.logged){
+            perfilButton.setVisible(true);
+        }
     }
 
     /**
@@ -146,6 +171,7 @@ public class Ventana extends javax.swing.JFrame {
     // Variables declaration - do not modify                     
     private javax.swing.JButton loginButton;
     private javax.swing.JButton registrarButton;
+    private javax.swing.JButton perfilButton;
     private javax.swing.JButton reservarButton;
     private javax.swing.JButton salirButton;
     // End of variables declaration                   

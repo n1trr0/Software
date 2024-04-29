@@ -1,4 +1,8 @@
 package Main;
+import BBDD.FuncionesGerente;
+import BBDD.FuncionesUsuario;
+import Data.Variables;
+
 import javax.swing.*;
 import java.sql.Connection;
 
@@ -9,11 +13,11 @@ import static BBDD.FuncionesComprobacion.*;
  * @author Raul
  */
 public class LogIn extends javax.swing.JFrame {
-    private JFrame ventanaPrincipal;
+    private Ventana ventanaPrincipal;
     /**
      * Creates new form LogIn
      */
-    public LogIn(JFrame parent) {
+    public LogIn(Ventana parent) {
         this.ventanaPrincipal = parent;
         initComponents();
         setLocationRelativeTo(parent);
@@ -141,8 +145,13 @@ public class LogIn extends javax.swing.JFrame {
                 Connection BD = conectarBD();
                 if (comprobacionFormatoCorreo(correoS)) {
                     if (BuscarUsuario(BD, correoS, contraS)) {
-                        desconexion(BD);
                         JOptionPane.showMessageDialog(null, "Los datos introducidos son correctos", "Información", JOptionPane.INFORMATION_MESSAGE);
+                        Variables.logged = true;
+                        Variables.usuario = correoS;
+                        Variables.password = contraS;
+                        Variables.nivel = FuncionesGerente.conseguirNivel(BD, correoS, contraS);
+                        Variables.telefono = FuncionesUsuario.ConseguirTelefono(BD, correoS, contraS);
+                        desconexion(BD);
                     } else {
                         desconexion(BD);
                         errorText.setText("El correo o contraseña no son correctos");
@@ -168,6 +177,7 @@ public class LogIn extends javax.swing.JFrame {
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
         ventanaPrincipal.setVisible(true);
+        ventanaPrincipal.update1();
     }
 
 
