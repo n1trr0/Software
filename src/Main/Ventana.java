@@ -124,12 +124,18 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     private void perfilButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        if (Variables.nivel == 0){
+            PerfilUser perfilUser = new PerfilUser(this);
+            perfilUser.setVisible(true);
+            this.setVisible(false);
+        }
     }
 
-    public void update1(){
+    public void updateVentana(){
         if(Variables.logged){
             perfilButton.setVisible(true);
+        }else {
+            perfilButton.setVisible(false);
         }
     }
 

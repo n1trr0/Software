@@ -177,7 +177,7 @@ public class LogIn extends javax.swing.JFrame {
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
         ventanaPrincipal.setVisible(true);
-        ventanaPrincipal.update1();
+        ventanaPrincipal.updateVentana();
     }
 
 
